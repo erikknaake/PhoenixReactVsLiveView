@@ -15,8 +15,7 @@ config :react_test_web, ReactTestWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "lWZiAf0m/0ILvJqM4fQlvjlPywuWKT6ymxKs9xt3w/FahSuOgRowCgJKN+IfsUzg",
   render_errors: [view: ReactTestWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: ReactTestWeb.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub_server: ReactTestWeb.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -26,7 +25,7 @@ config :logger, :console,
 config :react_test_web, :generators,
   context_app: :react_test
 
-
+config :phoenix, :json_library, Poison
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

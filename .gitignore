@@ -1,7 +1,8 @@
+**/rel
 **/node_modules
 **/.idea
 **/*.iml
-/_build
+**/_build
 /cover
 /deps
 erl_crash.dump
