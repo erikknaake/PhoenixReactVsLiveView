@@ -17,7 +17,7 @@ defmodule ReactTest.Application do
 #    IO.puts("what: ")
     Supervisor.start_link(
       [
-        supervisor(ReactTest.Repo, []),
+#        supervisor(ReactTest.Repo, []),
         {ReactTest.EditionsGenServer, name: EditionsServer}
 #        GenServer.start_link(ReactTest.EditionsGenServer, [%{year: 2019, teams: ["KDG", "Zona"]}, %{year: 2020, teams: ["KDG", "Zona", "Sint Joris"]}])
 #        MyStack
