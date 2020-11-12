@@ -20,7 +20,8 @@ config :react_test_web,
            "start",
            cd: Path.expand("../assets", __DIR__)
          ]
-       ]
+       ],
+       live_view: [signing_salt: "SECRET_SALT"]
 
 # ## SSL Support
 #

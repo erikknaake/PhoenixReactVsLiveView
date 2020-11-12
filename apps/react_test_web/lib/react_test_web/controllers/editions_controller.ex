@@ -3,14 +3,15 @@ defmodule EditionsController do
   use ReactTestWeb, :controller
 
   def get_all(conn, _) do
+    editions = ReactTest.EditionsGenServer.get_all()
+    |> IO.inspect()
     conn
-    |> json([%{year: 2019, teams: ["KDG", "Zona"]}, %{year: 2020, teams: ["KDG", "Zona", "Sint Joris"]}])
+    |> json(editions)
   end
 
-  def put_all(conn, params) do
-    {:ok, data, _conn_details} = Plug.Conn.read_body(conn)
-    IO.inspect(data)
-    conn
-    |> json([%{year: 2018, teams: ["KDG"]}, %{year: 2019, teams: ["KDG", "Zona"]}, %{year: 2020, teams: ["KDG", "Zona", "Sint Joris"]}])
+  def put(conn, %{"year" => year}) do
+    %{"_json" => body} = conn.params
+    ReactTest.EditionsGenServer.put(%{year: year, teams: body})
+    json conn, %{}
   end
 end

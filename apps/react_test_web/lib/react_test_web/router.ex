@@ -1,5 +1,6 @@
 defmodule ReactTestWeb.Router do
   use ReactTestWeb, :router
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -11,6 +12,8 @@ defmodule ReactTestWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Plug.Parsers, parsers: [:json],
+                       json_decoder: Poison
   end
 
   scope "/", ReactTestWeb do
@@ -24,6 +27,13 @@ defmodule ReactTestWeb.Router do
      pipe_through :api
 
      get "/editions", EditionsController, :get_all
-     post "/editions", EditionsController, :put_all
+     post "/editions/:year", EditionsController, :put
    end
+
+  if Mix.env() == :dev do
+    scope "/" do
+      pipe_through :browser
+      live_dashboard "/dashboard"
+    end
+  end
 end

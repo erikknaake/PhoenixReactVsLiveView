@@ -2,7 +2,7 @@ defmodule ReactTestWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :react_test_web
 
   socket "/socket", ReactTestWeb.UserSocket
-
+  socket "/live", Phoenix.LiveView.Socket
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest

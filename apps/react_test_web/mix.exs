@@ -46,7 +46,8 @@ defmodule ReactTestWeb.Mixfile do
       {:react_test, in_umbrella: true},
       {:cowboy, "~> 2.7"},
       {:plug_cowboy, "~> 2.1"},
-      {:poison, "~> 3.0"}
+      {:poison, "~> 3.0"},
+      {:phoenix_live_dashboard, "~> 0.1"}
     ]
   end
 
