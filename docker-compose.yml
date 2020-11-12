@@ -25,3 +25,9 @@ services:
       BASIC_AUTH_REALM: realm
     depends_on:
       - db
+  client:
+    build:
+      context: .
+      dockerfile: ClientDockerfile
+    ports:
+      - 4001:80

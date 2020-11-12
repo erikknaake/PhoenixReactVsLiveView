@@ -12,14 +12,6 @@ defmodule ReactTestWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Plug.Parsers, parsers: [:json],
-                       json_decoder: Poison
-  end
-
-  scope "/", ReactTestWeb do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.

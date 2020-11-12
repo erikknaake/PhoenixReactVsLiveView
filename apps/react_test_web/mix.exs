@@ -24,7 +24,7 @@ defmodule ReactTestWeb.Mixfile do
   def application do
     [
       mod: {ReactTestWeb.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools],
     ]
   end
 
@@ -47,7 +47,8 @@ defmodule ReactTestWeb.Mixfile do
       {:cowboy, "~> 2.7"},
       {:plug_cowboy, "~> 2.1"},
       {:poison, "~> 3.0"},
-      {:phoenix_live_dashboard, "~> 0.1"}
+      {:phoenix_live_dashboard, "~> 0.1"},
+      {:corsica, "~> 1.1"}
     ]
   end
 
