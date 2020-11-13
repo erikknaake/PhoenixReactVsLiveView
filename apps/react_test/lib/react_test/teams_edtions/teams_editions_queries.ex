@@ -1,10 +1,16 @@
 defmodule ReactTest.TeamsEditionsQueries do
   import Ecto.Query
-  alias ReactTest.{Repo, TeamsEditions}
+  alias ReactTest.{Repo, TeamsEditions, Teams, Editions}
 
-  def get_all do
-    Repo.all(from team_edition in TeamsEditions,
-             preload: :edition,
-             preload: :team)
+  def put(date, team) do
+    date |> IO.inspect()
+    team |> IO.inspect()
+    Repo.transaction(
+      fn ->
+        teamResult = Repo.insert!(%Teams{team_name: team})
+        editionResult = Repo.insert!(%Editions{date: date})
+        Repo.insert!(%TeamsEditions{teams: teamResult, editions: editionResult})
+      end
+    )
   end
 end

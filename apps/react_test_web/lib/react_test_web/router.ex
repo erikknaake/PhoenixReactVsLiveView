@@ -19,7 +19,7 @@ defmodule ReactTestWeb.Router do
      pipe_through :api
 
      get "/editions", EditionsController, :get_all
-     post "/editions/:year", EditionsController, :put
+     post "/editions/:date", EditionsController, :put
    end
 
   if Mix.env() == :dev do

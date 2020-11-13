@@ -14,9 +14,9 @@ function App() {
   useEffect(() => {
     console.log('fetching')
       fetchEditions().then(() => {
-          fetch('http://localhost:4000/api/editions/2017', {
+          fetch('http://localhost:4000/api/editions/2017-10-05', {
               method: 'POST',
-              body: JSON.stringify(["Witte Wieven", "Kabouters"]),
+              body: JSON.stringify("Kabouters"),
               headers: {
                   'Content-Type': 'application/json'
               },
