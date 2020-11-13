@@ -1,9 +1,10 @@
 FROM node:12-alpine as build
-ENV REACT_APP_SERVER_ADDRESS="localhost:4002"
+
 WORKDIR /app
 COPY package*json ./
 RUN npm i
 
+ARG REACT_APP_SERVER_ADDRESS
 COPY . .
 RUN npm run build
 
