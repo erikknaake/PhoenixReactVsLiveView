@@ -6,7 +6,7 @@
    - Copy the `.env.example` file to `.env` (`mv .env.example .env`)
    - Change secrets inside the `.env` file
    - `source .env`
-2. `docker compose up` or `./start.sh` to also load the `.env` file on linux
+2. `docker compose up` or `./start.sh` to also load the `.env` file on linux. Use `docker-compose up --build` after to rebuild after code changes
 3. If this is the first run or the DB schema has to be updated, manually run `mix ecto.create && mix ecto.migrate` 
 from apps/react_test. 
 Dont forget to use `MIX_ENV=prod` and the `.env` variables when running against production, this step should be handled by CI/CD later 

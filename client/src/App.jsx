@@ -2,9 +2,11 @@ import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState} from "react";
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000'
+
 function App() {
   let [editions, setEditions] = useState([]);
-  const fetchEditions = () => fetch('http://localhost:4000/api/editions', {mode: 'cors'})
+  const fetchEditions = () => fetch(API_BASE_URL + '/api/editions', {mode: 'cors'})
       .then(resp => resp.json())
       .then(json => {
           console.log('fetched: ', json);
@@ -14,7 +16,7 @@ function App() {
   useEffect(() => {
     console.log('fetching')
       fetchEditions().then(() => {
-          fetch('http://localhost:4000/api/editions/2017-10-05', {
+          fetch(API_BASE_URL + '/api/editions/2017-10-05', {
               method: 'POST',
               body: JSON.stringify("Kabouters"),
               headers: {

@@ -1,7 +1,6 @@
 FROM node:12-alpine as build
-
+ENV REACT_APP_API_BASE_URL="http://localhost:4002"
 WORKDIR /app
-
 COPY package*json ./
 RUN npm i
 
