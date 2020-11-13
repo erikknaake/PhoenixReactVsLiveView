@@ -5,7 +5,5 @@ defmodule ReactTest.Cors do
       max_age: 600,
       allow_headers: ["content-type"]
 
-#  resource "/*"
-
   resource "/*path"
 end

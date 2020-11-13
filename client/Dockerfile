@@ -2,10 +2,10 @@ FROM node:12 as build
 
 WORKDIR /app
 
-COPY apps/react_test_web/assets/package*json ./
+COPY package*json ./
 RUN npm i
 
-COPY apps/react_test_web/assets .
+COPY . .
 RUN npm run build
 
 FROM nginx:1.18.0-alpine

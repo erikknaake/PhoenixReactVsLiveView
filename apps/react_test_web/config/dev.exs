@@ -18,7 +18,7 @@ config :react_test_web,
          node: [
            "node_modules/react-scripts/bin/react-scripts.js",
            "start",
-           cd: Path.expand("../assets", __DIR__)
+           cd: Path.expand("../../../client", __DIR__)
          ]
        ],
        live_view: [signing_salt: "SECRET_SALT"]

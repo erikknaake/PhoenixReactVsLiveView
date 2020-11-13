@@ -1,9 +1,9 @@
-**/rel
 **/node_modules
 **/.idea
 **/*.iml
 **/_build
-/cover
-/deps
-erl_crash.dump
+**/cover
+**/deps
+**/erl_crash.dump
 *.ez
+**/build
