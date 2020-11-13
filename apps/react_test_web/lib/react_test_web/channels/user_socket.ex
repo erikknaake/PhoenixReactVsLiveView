@@ -2,7 +2,7 @@ defmodule ReactTestWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", ReactTestWeb.RoomChannel
+   channel "edition", ReactTestWeb.EditionsChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

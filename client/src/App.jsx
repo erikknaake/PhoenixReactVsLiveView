@@ -1,11 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState} from "react";
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000'
+import socket from './socket';
+import {API_BASE_URL} from "./constants";
 
 function App() {
   let [editions, setEditions] = useState([]);
+
   const fetchEditions = () => fetch(API_BASE_URL + '/api/editions', {mode: 'cors'})
       .then(resp => resp.json())
       .then(json => {
@@ -14,21 +14,31 @@ function App() {
       });
 
   useEffect(() => {
-    console.log('fetching')
-      fetchEditions().then(() => {
-          fetch(API_BASE_URL + '/api/editions/2017-10-05', {
-              method: 'POST',
-              body: JSON.stringify("Kabouters"),
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              mode: 'cors'
-          })
-              .then(resp => {
-                  console.log('done with post')
-                  fetchEditions();
-              });
+      console.log('joining channel');
+      let channel = socket.channel("edition", {});
+      channel.on("team_joined", ({editions}) => {
+          console.log('received team_joined with event: ', editions);
+          setEditions(editions);
       });
+      channel.join()
+          .receive("ok", resp => {
+              console.log("Joined successfully, ", resp);
+              console.log('fetching')
+              fetchEditions().then(() => {
+                  fetch(API_BASE_URL + '/api/editions/2017-10-05', {
+                      method: 'POST',
+                      body: JSON.stringify("Kabouters"),
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      mode: 'cors'
+                  });
+              });
+          })
+          .receive("error", resp => {
+              console.log('Unable to join, response: ', resp);
+          });
+      console.log('finished join use effect');
   }, [1]);
 
   return (
