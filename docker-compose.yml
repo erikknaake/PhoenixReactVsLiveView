@@ -1,4 +1,12 @@
-version: '3.1'
+version: '3.8'
+
+secrets:
+  POSTGRES_PASSWORD:
+    file: ./postgres-secrets.POSTGRES_PASSWORD
+  POSTGRES_USER:
+    file: ./postgres-secrets.POSTGRES_USER
+  POSTGRES_DB:
+    file: ./postgres-secrets.POSTGRES_DB
 
 services:
 
@@ -6,12 +14,11 @@ services:
     image: postgres:13.1-alpine
     restart: always
     environment:
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_DB: "react_test"
+      POSTGRES_PASSWORD: "/run/secrets/POSTGRES_PASSWORD"
+      POSTGRES_USER: "/run/secrets/POSTGRES_USER"
+      POSTGRES_DB: "/run/secrets/POSTGRES_DB"
     ports:
       - 5432:5432
-
   phoenix:
     build:
       context: .

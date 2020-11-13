@@ -9,3 +9,5 @@
 **/build
 os
 traceback
+**/*secret*/**
+!**/*secret*example*/**
