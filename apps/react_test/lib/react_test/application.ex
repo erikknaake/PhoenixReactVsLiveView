@@ -11,16 +11,10 @@ defmodule ReactTest.Application do
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
-#    {:ok, what} = GenServer.start_link(Stack, [:hello], name: MyStack)
-#    IO.puts("what: ")
-#    IO.puts(what)
-#    IO.puts("what: ")
     Supervisor.start_link(
       [
-#        supervisor(ReactTest.Repo, []),
+        supervisor(ReactTest.Repo, []),
         {ReactTest.EditionsGenServer, name: EditionsServer},
-        #        GenServer.start_link(ReactTest.EditionsGenServer, [%{year: 2019, teams: ["KDG", "Zona"]}, %{year: 2020, teams: ["KDG", "Zona", "Sint Joris"]}])
-#        MyStack
       ],
       strategy: :one_for_one,
       name: ReactTest.Supervisor
