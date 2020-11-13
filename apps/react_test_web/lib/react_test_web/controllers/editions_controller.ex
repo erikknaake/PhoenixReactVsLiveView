@@ -3,15 +3,15 @@ defmodule EditionsController do
   use ReactTestWeb, :controller
 
   def get_all(conn, _) do
-    editions = ReactTest.EditionsQueries.get_all() #|> IO.inspect() #ReactTest.EditionsGenServer.get_all()
-    mapped = Enum.map(editions, fn(edition) ->
+    editions = ReactTest.EditionsQueries.get_all()
+    |> Enum.map(fn(edition) ->
       team_names = Enum.map(edition.teams, fn(team) ->
-        team.team_name |> IO.inspect()
-      end) |> IO.inspect()
-         %{"date" => edition.date, "teams" => team_names} |> IO.inspect()
-    end) |> IO.inspect()
+        team.team_name
+      end)
+         %{"date" => edition.date, "teams" => team_names}
+    end)
     conn
-    |> json(mapped)
+    |> json(editions)
   end
 
   def put(conn, %{"year" => year}) do
