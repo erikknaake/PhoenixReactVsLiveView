@@ -1,1 +1,1 @@
-source .env && docker-compose up
+source ./.env && docker-compose up
