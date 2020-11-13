@@ -2,6 +2,7 @@ defmodule ReactTest.Editions do
   use Ecto.Schema
 
   @required_fields ~w(date)a
+  @derive {Poison.Encoder, only: @required_fields}
   schema "editions" do
     field :date, Ecto.Date
     many_to_many :teams, ReactTest.Teams, join_through: ReactTest.TeamsEditions

@@ -18,12 +18,12 @@ team5 = ReactTest.Repo.insert!(%ReactTest.Teams{team_name: "Graaf Otto groep"})
 edition1 = ReactTest.Repo.insert!(%ReactTest.Editions{date: Ecto.Date.cast!({2020, 12, 6})})
 edition2 = ReactTest.Repo.insert!(%ReactTest.Editions{date: Ecto.Date.cast!({2021, 3, 6})})
 
-ReactTest.Repo.insert!(%ReactTest.TeamsEditions{team: team1, edition: edition1})
-ReactTest.Repo.insert!(%ReactTest.TeamsEditions{team: team1, edition: edition2})
+ReactTest.Repo.insert!(%ReactTest.TeamsEditions{teams: team1, editions: edition1})
+ReactTest.Repo.insert!(%ReactTest.TeamsEditions{teams: team1, editions: edition2})
 
-ReactTest.Repo.insert!(%ReactTest.TeamsEditions{team: team2, edition: edition1})
-ReactTest.Repo.insert!(%ReactTest.TeamsEditions{team: team2, edition: edition2})
+ReactTest.Repo.insert!(%ReactTest.TeamsEditions{teams: team2, editions: edition1})
+ReactTest.Repo.insert!(%ReactTest.TeamsEditions{teams: team2, editions: edition2})
 
-ReactTest.Repo.insert!(%ReactTest.TeamsEditions{team: team3, edition: edition1})
+ReactTest.Repo.insert!(%ReactTest.TeamsEditions{teams: team3, editions: edition1})
 
-ReactTest.Repo.insert!(%ReactTest.TeamsEditions{team: team4, edition: edition2})
+ReactTest.Repo.insert!(%ReactTest.TeamsEditions{teams: team4, editions: edition2})

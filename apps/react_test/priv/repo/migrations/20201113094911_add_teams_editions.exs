@@ -12,8 +12,8 @@ defmodule ReactTest.Repo.Migrations.AddTeamsEditions do
     end
 
     create table(:teams_editions, primary_key: false) do
-      add :edition_id, references(:editions)
-      add :team_id, references(:teams)
+      add :editions_id, references(:editions)
+      add :teams_id, references(:teams)
     end
 
   end

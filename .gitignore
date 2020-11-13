@@ -9,5 +9,8 @@
 **/build
 os
 traceback
+
 **/*secret*/**
+**/*.env*/**
 !**/*secret*example*/**
+!**/*.env*example*/**

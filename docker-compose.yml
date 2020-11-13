@@ -1,22 +1,14 @@
 version: '3.8'
 
-secrets:
-  POSTGRES_PASSWORD:
-    file: ./postgres-secrets.POSTGRES_PASSWORD
-  POSTGRES_USER:
-    file: ./postgres-secrets.POSTGRES_USER
-  POSTGRES_DB:
-    file: ./postgres-secrets.POSTGRES_DB
-
 services:
 
   db:
     image: postgres:13.1-alpine
     restart: always
     environment:
-      POSTGRES_PASSWORD: "/run/secrets/POSTGRES_PASSWORD"
-      POSTGRES_USER: "/run/secrets/POSTGRES_USER"
-      POSTGRES_DB: "/run/secrets/POSTGRES_DB"
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - 5432:5432
   phoenix:
@@ -28,6 +20,11 @@ services:
     environment:
       PORT: 4000
       COOKIE: a_cookie
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_HOST: db
+      DATABASE_URL: "ecto://postgres:postgres@db/react_test"
     depends_on:
       - db
 

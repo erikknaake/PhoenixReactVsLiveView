@@ -36,7 +36,7 @@ function App() {
         <ul>
           {editions.map(edition =>
               <li>
-                <div>{edition.year}
+                <div>{edition.date}
                 <ul>
                     {edition.teams.map(team => <li>{team}</li>)}
                     </ul>
