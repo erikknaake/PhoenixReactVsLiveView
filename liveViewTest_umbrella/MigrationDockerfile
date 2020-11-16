@@ -1,0 +1,22 @@
+# File: my_app/Dockerfile
+FROM elixir:1.9-alpine as build
+
+RUN mkdir /liveViewTest_umbrella
+WORKDIR /liveViewTest_umbrella
+
+# install Hex + Rebar
+RUN mix do local.hex --force, local.rebar --force
+ENV DATABASE_URL=$DATABASE_URL
+ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
+# set build ENV
+ENV MIX_ENV=prod
+
+# install mix dependencies
+COPY mix.exs mix.lock ./
+COPY config config
+COPY apps/liveViewTest apps/liveViewTest
+WORKDIR /liveViewTest_umbrella/apps/liveViewTest
+RUN mix deps.get --only $MIX_ENV
+RUN mix deps.compile
+
+CMD ["mix", "ecto.setup"]
