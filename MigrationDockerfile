@@ -17,8 +17,8 @@ ENV MIX_ENV=prod
 COPY mix.exs mix.lock ./
 COPY config config
 COPY apps/react_test apps/react_test
+WORKDIR /react_test_umbrella/apps/react_test
 RUN mix deps.get --only $MIX_ENV
 RUN mix deps.compile
 
-WORKDIR /react_test_umbrella/apps/react_test
 CMD ["mix", "ecto.setup"]

@@ -1,15 +1,31 @@
 # ReactTest.Umbrella
 
+## Run with minikube
+
+1. Build containers `source .env && docker-compose build`
+2. navigate to k8s `cd k8s`
+3. copy config-maps `cp phoenix-config-map.secret.example.yaml phoenix-config-map.secret.yaml && cp postgres-config-map.secret.example.yaml postgres-config-map.secret.yaml`
+4. Edits secret values
+5. Add built images to cache `minikube cache add react_test_umbrella_client:latest && minikube cache add react_test_umbrella_migrator:latest && minikube cache add react_test_umbrella_phoenix:latest`
+6. Apply `kubectl apply -f phoenix-config-map.secret.yaml -f postgres-config-map.secret.yaml -f db.yaml -f phoenix.yaml -f client.yaml` or run `./apply.sh`
+7. Make phoenix accessible `kubectl port-forward service/phoenix 4002:80` on static port and ip (localhost)
+8. Make phoenix accessible `kubectl port-forward service/client 4002:80` on static port and ip (localhost)
+
+Or follow step 2, 3 and 4 and do `./setup.sh`, then proceed at step 8
+
+Monitor with `minikube dashboard`
+
 ## Run with docker(-compose)
 
 1. Set the environment variables
-   - Copy the `./k8s/.env.example` file to `./k8s/.env` (`mv ./k8s/.env.example ./k8s/.env`)
+   - Copy the `.env.example` file to `.env` (`mv ./.env.example .env`)
    - Change secrets inside the `.env` file
-   - `source ./k8s/.env`
+   - `source ..env`
 2. `docker compose up` or `./start.sh` to also load the `.env` file on linux. Use `docker-compose up --build` after to rebuild after code changes
 3. If this is the first run or the DB schema has to be updated, manually run `mix ecto.create && mix ecto.migrate` 
 from apps/react_test. 
 Dont forget to use `MIX_ENV=prod` and the `.env` variables when running against production, this step should be handled by CI/CD later 
+
 ## Run dev mode
 
 1. Start postgres 

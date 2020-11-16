@@ -17,7 +17,7 @@ ENV MIX_ENV=prod
 COPY mix.exs mix.lock ./
 COPY config config
 COPY apps apps
-RUN mix deps.get --only $MIX_ENV
+RUN  mix deps.get --only $MIX_ENV
 RUN mix deps.compile
 
 # build release

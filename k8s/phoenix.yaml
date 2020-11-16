@@ -19,35 +19,18 @@ spec:
           ports:
             - containerPort: 4000
           env:
-            - name: DB_NAME
-              value: react_test
-            - name: DB_USER
-              value: postgres
-            - name: DB_PASSWORD
-              value: postgres
-            - name: DB_HOST
-              value: postgres
-            - name: DATABASE_URL
-              value: "ecto://postgres:postgres@postgres/react_test"
             - name: PORT
               value: "4000"
+          envFrom:
+            - configMapRef:
+                name: phoenix-config
       initContainers:
         - name: database-migrator
           image: react_test_umbrella_migrator:latest
           imagePullPolicy: Never
-          env:
-            - name: DB_NAME
-              value: react_test
-            - name: DB_USER
-              value: postgres
-            - name: DB_PASSWORD
-              value: postgres
-            - name: DB_HOST
-              value: postgres
-            - name: DATABASE_URL
-              value: "ecto://postgres:postgres@postgres/react_test"
-            - name: PORT
-              value: "4000"
+          envFrom:
+            - configMapRef:
+                name: phoenix-config
 ---
 apiVersion: v1
 kind: Service
@@ -63,5 +46,6 @@ spec:
       name: http
   clusterIP: 10.96.0.238
   type: LoadBalancer
+  loadBalancerIP: 192.168.49.2
   selector:
     run: phoenix

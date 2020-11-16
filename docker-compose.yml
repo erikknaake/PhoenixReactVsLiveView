@@ -46,6 +46,6 @@ services:
       context: ./client
       dockerfile: Dockerfile
       args:
-        REACT_APP_SERVER_ADDRESS: "192.168.49.2:30505" #"localhost:4002"
+        REACT_APP_SERVER_ADDRESS: "localhost:4002"
     ports:
       - 4001:80
