@@ -3,9 +3,9 @@
 ## Run with docker(-compose)
 
 1. Set the environment variables
-   - Copy the `.env.example` file to `.env` (`mv .env.example .env`)
+   - Copy the `./k8s/.env.example` file to `./k8s/.env` (`mv ./k8s/.env.example ./k8s/.env`)
    - Change secrets inside the `.env` file
-   - `source .env`
+   - `source ./k8s/.env`
 2. `docker compose up` or `./start.sh` to also load the `.env` file on linux. Use `docker-compose up --build` after to rebuild after code changes
 3. If this is the first run or the DB schema has to be updated, manually run `mix ecto.create && mix ecto.migrate` 
 from apps/react_test. 

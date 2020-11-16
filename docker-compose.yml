@@ -11,6 +11,18 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - 5432:5432
+  migrator:
+    build:
+      context: .
+      dockerfile: MigrationDockerfile
+    environment:
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_HOST: db
+      DATABASE_URL: "ecto://postgres:postgres@db/react_test"
+    depends_on:
+      - db
   phoenix:
     build:
       context: .
@@ -27,12 +39,13 @@ services:
       DATABASE_URL: "ecto://postgres:postgres@db/react_test"
     depends_on:
       - db
+      - migrator
 
   client:
     build:
       context: ./client
       dockerfile: Dockerfile
       args:
-        REACT_APP_SERVER_ADDRESS: "localhost:4002"
+        REACT_APP_SERVER_ADDRESS: "192.168.49.2:30505" #"localhost:4002"
     ports:
       - 4001:80

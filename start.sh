@@ -1,1 +1,1 @@
-source ./.env && docker-compose up
+source ./k8s/.env && docker-compose up
