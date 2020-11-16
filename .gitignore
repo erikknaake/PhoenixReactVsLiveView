@@ -10,7 +10,9 @@
 os
 traceback
 
+**/*secret*
 **/*secret*/**
 **/*.env*/**
 !**/*secret*example*/**
+!**/*secret*example*
 !**/*.env*example*/**
