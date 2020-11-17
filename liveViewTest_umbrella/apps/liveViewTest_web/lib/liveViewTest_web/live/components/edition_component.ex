@@ -26,7 +26,7 @@ defmodule LiveViewTestWeb.EditionComponent do
   end
 
   def handle_event("save", %{"registration" => %{"team_name" => team_name}}, socket) do
-    send self(), {:registrate_team, socket.assigns.edition.id, team_name}
+    send self(), {:registrate_team, socket.assigns.edition.date, team_name}
     {:noreply, socket}
   end
 end
