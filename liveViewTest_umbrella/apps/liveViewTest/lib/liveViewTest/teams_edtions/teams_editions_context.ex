@@ -1,10 +1,11 @@
 defmodule LiveViewTest.TeamsEditionsContext do
   import Ecto.Query
   alias LiveViewTest.{Repo, TeamsEditions, TeamsContext, EditionsContext}
+  @team_edition_topic = "teams_editions"
 
   @doc """
     Inserts a team into an edition, when the team does not exist the team is created
-    Returns the updated edition
+    Returns the updated edition and broadcasts the update
   """
   def put(date, team) do
     {:ok, result} = Repo.transaction(
@@ -24,12 +25,11 @@ defmodule LiveViewTest.TeamsEditionsContext do
   end
 
   defp broadcast(data, event) do
-    Phoenix.PubSub.broadcast(LiveViewTest.PubSub, "teams_editions", {event, data})
-    data
+    LiveViewTest.PubSubHelper.broadcast(@team_edition_topic, event, data)
   end
 
   def subscribe do
-    Phoenix.PubSub.subscribe(LiveViewTest.PubSub, "teams_editions")
+    LiveViewTest.PubSubHelper.subscribe(@team_edition_topic)
   end
 
 
