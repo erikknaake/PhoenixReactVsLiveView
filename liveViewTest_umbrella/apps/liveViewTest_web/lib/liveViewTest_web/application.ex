@@ -6,6 +6,7 @@ defmodule LiveViewTestWeb.Application do
   use Application
 
   def start(_type, _args) do
+    IO.puts("Starting phoenix, MIX_ENV: #{System.get_env("MIX_ENV")}")
     children = [
       # Start the Telemetry supervisor
       LiveViewTestWeb.Telemetry,

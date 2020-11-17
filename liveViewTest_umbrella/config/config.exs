@@ -8,7 +8,7 @@
 # configurations or dependencies per app, it is best to
 # move said applications out of the umbrella.
 use Mix.Config
-
+IO.puts("Config: #{Mix.env()}")
 # Configure Mix tasks and generators
 config :liveViewTest,
   ecto_repos: [LiveViewTest.Repo]
