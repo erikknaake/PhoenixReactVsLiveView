@@ -1,7 +1,7 @@
 defmodule LiveViewTest.TeamsEditionsContext do
   import Ecto.Query
   alias LiveViewTest.{Repo, TeamsEditions, TeamsContext, EditionsContext}
-  @team_edition_topic = "teams_editions"
+  @team_edition_topic "teams_editions"
 
   @doc """
     Inserts a team into an edition, when the team does not exist the team is created
