@@ -21,39 +21,23 @@ defmodule LiveViewTest.Application do
 
   def connect_to_cluster do
     # Docker internal DNS lookup
-    IO.inspect(:name)
-    IO.inspect(node())
-    IO.inspect(Node.list())
+    IO.puts("Node name: #{node()}")
     {lookup_result, _} = System.cmd("nslookup", ["phoenix"])
-    IO.inspect(lookup_result)
-#    Regex.scan(~r/[0-9,a-f]{12}/, lookup_result) |> IO.inspect()
-    Regex.scan(~r/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/, lookup_result) |> IO.inspect()
+
+    Regex.scan(~r/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/, lookup_result)
     |> List.flatten
     |> Enum.reject(
          fn x ->
-          IO.puts("looking at for rejection")
-          IO.puts("x: #{to_string(x)}")
-#          own_hostname = System.get_env("CONTAINER_IP") |> IO.inspect()
           {own_hostname, 0} = System.cmd("hostname", ["-i"])
-          IO.puts("Own ip: #{to_string(own_hostname) |>String.trim("\n")}")
-          IO.puts("Comparison result: #{to_string(x) == String.trim(to_string(own_hostname), "\n")}")
-           to_string(x) == String.trim(to_string(own_hostname), "\n")
+           x == own_hostname
          end
        )
-    |> IO.inspect()
-#    |> Enum.map(fn ip ->
-#      IO.puts("nslookup for ip: #{ip}")
-#      {container_id_lookup, _} = System.cmd("nslookup", [ip])
-#      IO.puts("nslookup result #{container_id_lookup}")
-#      Regex.scan(~r/[0-9,a-f]{12}/, container_id_lookup) |> IO.inspect()
-#    end)
-#    |> List.flatten |> IO.inspect()
     |> Enum.map(
          fn ip ->
-           IO.puts("Connecting to phoenix@#{ip}")
            Node.connect(:"phoenix@#{ip}")
-           Node.list()
          end
        )
+       IO.puts("Connected to: ")
+       IO.inspect(Node.list())
   end
 end
