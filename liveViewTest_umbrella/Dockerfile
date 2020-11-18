@@ -48,5 +48,6 @@ ENV MIX_ENV=prod
 # copy release to app container
 COPY --from=build /liveViewTest_umbrella/_build/prod/rel/standard/ .
 COPY --from=build /liveViewTest_umbrella/apps/liveViewTest_web/priv /apps/liveViewTest_web/priv
+COPY entrypoint.sh ./entrypoint.sh
 
-CMD ["./bin/standard", "start"]
+CMD ["sh", "./entrypoint.sh"]
