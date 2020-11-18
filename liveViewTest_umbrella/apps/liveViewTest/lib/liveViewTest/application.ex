@@ -6,7 +6,9 @@ defmodule LiveViewTest.Application do
   use Application
 
   def start(_type, _args) do
-    connect_to_cluster()
+    if(System.get_env("CONNECT_TO_SERVER") != nil) do
+      connect_to_cluster()
+    end
     children = [
       # Start the Ecto repository
       LiveViewTest.Repo,
@@ -28,7 +30,7 @@ defmodule LiveViewTest.Application do
     |> List.flatten
     |> Enum.reject(
          fn x ->
-          {own_hostname, 0} = System.cmd("hostname", ["-i"])
+           {own_hostname, 0} = System.cmd("hostname", ["-i"])
            x == own_hostname
          end
        )
@@ -37,7 +39,7 @@ defmodule LiveViewTest.Application do
            Node.connect(:"phoenix@#{ip}")
          end
        )
-       IO.puts("Connected to: ")
-       IO.inspect(Node.list())
+    IO.puts("Connected to: ")
+    IO.inspect(Node.list())
   end
 end

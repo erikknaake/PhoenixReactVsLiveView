@@ -11,6 +11,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - 5432:5432
+
   migrator:
     build:
       context: .
@@ -22,6 +23,7 @@ services:
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
     depends_on:
       - db
+
   phoenix:
     build:
       context: .
@@ -36,19 +38,3 @@ services:
       - 4000
     depends_on:
       - db
-#  phoenix2:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    environment:
-#      PORT: 4000
-#      DB_NAME: ${POSTGRES_DB}
-#      DB_USER: ${POSTGRES_USER}
-#      DB_PASSWORD: ${POSTGRES_PASSWORD}
-#      DB_HOST: db
-#      DATABASE_URL: ${DATABASE_URL}
-#      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
-#    ports:
-#      - 4003:4000
-#    depends_on:
-#      - db
