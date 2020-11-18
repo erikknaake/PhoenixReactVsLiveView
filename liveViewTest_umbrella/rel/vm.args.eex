@@ -9,3 +9,5 @@
 
 ## Tweak GC to run more often
 ##-env ERL_FULLSWEEP_AFTER 10
+-name phoenix@${CONTAINER_IP}
+-smp auto

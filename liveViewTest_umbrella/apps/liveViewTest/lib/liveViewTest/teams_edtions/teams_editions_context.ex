@@ -1,5 +1,4 @@
 defmodule LiveViewTest.TeamsEditionsContext do
-  import Ecto.Query
   alias LiveViewTest.{Repo, TeamsEditions, TeamsContext, EditionsContext}
   @team_edition_topic "teams_editions"
 
@@ -13,7 +12,7 @@ defmodule LiveViewTest.TeamsEditionsContext do
         editionResult = EditionsContext.create_if_not_exists(date)
         teamResult = TeamsContext.create_if_not_exists(team)
 
-        teamEdition = %TeamsEditions{teams: teamResult, editions: editionResult}
+        %TeamsEditions{teams: teamResult, editions: editionResult}
           |> Repo.insert!()
 
         editionResult

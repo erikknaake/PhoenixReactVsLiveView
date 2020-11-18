@@ -15,11 +15,9 @@ services:
     build:
       context: .
       dockerfile: MigrationDockerfile
+      args:
+        DATABASE_URL: ${DATABASE_URL}
     environment:
-      DB_NAME: ${POSTGRES_DB}
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
-      DB_HOST: db
       DATABASE_URL: ${DATABASE_URL}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
     depends_on:
@@ -28,16 +26,29 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - 4002:4000
+      args:
+        DATABASE_URL: ${DATABASE_URL}
     environment:
       PORT: 4000
-      COOKIE: a_cookie
-      DB_NAME: ${POSTGRES_DB}
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
-      DB_HOST: db
       DATABASE_URL: ${DATABASE_URL}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+    ports:
+      - 4000
     depends_on:
       - db
+#  phoenix2:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    environment:
+#      PORT: 4000
+#      DB_NAME: ${POSTGRES_DB}
+#      DB_USER: ${POSTGRES_USER}
+#      DB_PASSWORD: ${POSTGRES_PASSWORD}
+#      DB_HOST: db
+#      DATABASE_URL: ${DATABASE_URL}
+#      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+#    ports:
+#      - 4003:4000
+#    depends_on:
+#      - db

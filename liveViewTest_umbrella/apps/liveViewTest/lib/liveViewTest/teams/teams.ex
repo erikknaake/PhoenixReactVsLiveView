@@ -10,7 +10,7 @@ defmodule LiveViewTest.Teams do
 
   def changeset(event, params \\ %{}) do
     event
-    |> Ecto.Changeset.cast(@required_fields)
+    |> Ecto.Changeset.cast(params, @required_fields)
     |> Ecto.Changeset.validate_required(@required_fields)
   end
 end

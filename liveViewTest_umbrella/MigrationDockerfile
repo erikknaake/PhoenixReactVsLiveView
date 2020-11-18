@@ -12,11 +12,15 @@ ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
 ENV MIX_ENV=prod
 
 # install mix dependencies
-COPY mix.exs mix.lock ./
-COPY config config
-COPY apps/liveViewTest apps/liveViewTest
-WORKDIR /liveViewTest_umbrella/apps/liveViewTest
+RUN mkdir ./apps
+RUN mkdir ./apps/liveViewTest
+COPY mix.* mix.* ./
+COPY apps/liveViewTest/mix.* ./apps/liveViewTest
 RUN mix deps.get --only $MIX_ENV
 RUN mix deps.compile
+
+COPY config config
+COPY apps/liveViewTest ./apps/liveViewTest
+WORKDIR /liveViewTest_umbrella/apps/liveViewTest
 
 CMD ["mix", "ecto.setup"]

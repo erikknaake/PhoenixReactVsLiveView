@@ -11,7 +11,7 @@ defmodule LiveViewTest.TeamsEditions do
 
   def changeset(event, params \\ %{}) do
     event
-    |> Ecto.Changeset.cast(@required_fields)
+    |> Ecto.Changeset.cast(params, @required_fields)
     |> Ecto.Changeset.validate_required(@required_fields)
     |> Ecto.Changeset.assoc_constraint(:teams)
     |> Ecto.Changeset.assoc_constraint(:editions)

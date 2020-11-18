@@ -1,7 +1,7 @@
 defmodule LiveViewTest.Editions do
   use Ecto.Schema
 
-  @required_fields ~w(date)a
+  @required_fields ~w(date is_open)a
   @derive {Jason.Encoder, only: @required_fields}
   schema "editions" do
     field :date, :date
@@ -11,7 +11,7 @@ defmodule LiveViewTest.Editions do
 
   def changeset(event, params \\ %{}) do
     event
-    |> Ecto.Changeset.cast(@required_fields)
+    |> Ecto.Changeset.cast(params, @required_fields)
     |> Ecto.Changeset.validate_required(@required_fields)
   end
 end
