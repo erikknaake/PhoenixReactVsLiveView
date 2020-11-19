@@ -1,3 +1,0 @@
-# ReactTest
-
-**TODO: Add description**

@@ -1,0 +1,4 @@
+<h1>Editions</h1>
+<%= for edition <- @editions do %>
+    <%= live_component @socket, LiveViewTestWeb.EditionComponent, id: edition.id, edition: edition%>
+<% end %>
