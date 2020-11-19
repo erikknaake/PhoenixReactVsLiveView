@@ -1,4 +1,3 @@
-# File: my_app/Dockerfile
 FROM elixir:1.9-alpine as build
 
 # install build dependencies
@@ -41,7 +40,7 @@ RUN mix release standard
 FROM alpine:3.9 AS app
 
 # install runtime dependencies
-RUN apk add --update bash openssl postgresql-client
+RUN apk add --update openssl postgresql-client
 
 EXPOSE 4000
 ENV MIX_ENV=prod
