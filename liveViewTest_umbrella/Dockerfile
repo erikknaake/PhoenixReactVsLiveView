@@ -54,7 +54,6 @@ ARG UMBRELLA_PATH
 ARG WEB_PATH
 # copy release to app container
 COPY --from=build $UMBRELLA_PATH/_build/prod/rel/$RELEASE_NAME/ .
-COPY --from=build $UMBRELLA_PATH/$WEB_PATH/priv /$WEB_PATH/priv
 COPY entrypoint.sh ./entrypoint.sh
 
 CMD ["sh", "./entrypoint.sh"]
