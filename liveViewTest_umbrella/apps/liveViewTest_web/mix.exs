@@ -56,7 +56,8 @@ defmodule LiveViewTestWeb.MixProject do
 #      {:ex_aws, git: "https://github.com/ex-aws/ex_aws"},
       {:hackney, "~> 1.9"},
       {:sweet_xml, "~> 0.6"},
-      {:httpoison, "~> 1.7"}
+      {:httpoison, "~> 1.7"},
+      {:timex, "~> 3.6"}
       # end file uploads
     ]
   end

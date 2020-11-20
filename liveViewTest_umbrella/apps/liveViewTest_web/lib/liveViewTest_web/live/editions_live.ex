@@ -44,28 +44,24 @@ defmodule LiveViewTestWeb.EditionsLive do
     IO.puts("presign")
     IO.inspect(entry)
 
+    key = entry.client_name
     config = %{
       region: "us-east-1",
-      access_key_id: System.fetch_env("AWS_ACCESS_KEY_ID") || "minio",
-      secret_access_key: System.fetch_env("AWS_SECRET_ACCESS_KEY") || "ucY>Au}Q'Ue]UUF7VY9[/Mz^iR9x6R2rqrRFEV^v>}d:["
+      access_key_id: "minio",
+      secret_key: "minio123",
+      object: key,
+      bucket: "uploads",
+      expire_seconds: 24 * 60 * 60 * 10,
+      host: "localhost",
+      port: 9000,
+      protocol: "http"
     }
 
-    #    {:ok, fields} =
-    #      S3.sign_form_upload(config, bucket,
-    #        key: key,
-    #        content_type: entry.client_type,
-    #        max_file_size: uploads.avatar.max_file_size,
-    #        expires_in: :timer.hours(1)
-    #      )
-    #      S3.presigned_url(config, :post, bucket, key)
-    key = entry.client_name
-    response = HTTPoison.get!("http://localhost:3000/#{key}") |> IO.inspect()
-    %{"formData" => fields, "postURL" => url} = Jason.decode!(response.body) |> IO.inspect()
+    %{postURL: post_url, formData: form_data} = LiveViewTestWeb.MinioSigning.pre_signed_post_policy(config)
 
-    meta = %{uploader: "S3", key: key, url: url, fields: fields}
+    meta = %{uploader: "S3", key: key, url: post_url, fields: form_data} |> IO.inspect()
     {:ok, meta, socket}
-#    {:ok, %{uploader: "S3", entrypoint: signed_url}, socket}
-#    {:ok, %{uploader: "UpChunk", entrypoint: signed_url}, socket}
+
   end
   def handle_event("validate", _params, socket) do
     IO.puts("validate")
