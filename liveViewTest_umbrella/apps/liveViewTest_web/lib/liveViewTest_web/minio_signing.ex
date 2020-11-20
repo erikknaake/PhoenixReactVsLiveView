@@ -144,8 +144,15 @@ defmodule LiveViewTestWeb.MinioSigning do
         "conditions" => conditions,
         "expiration" => DateTime.add(datetime, expiration, :second)
                         |> DateTime.to_iso8601()
+                        |> zeroifySeconds()
       }
     }
+  end
+
+  defp zeroifySeconds(iso8601) do
+    IO.puts("zeroifying")
+    Regex.replace(~r/:\d{2}\./, iso8601, ":00.") |> IO.inspect()
+#    "#{rest}:00.#{millis}Z"
   end
 
   @spec add_date(policy, String.t) :: policy
