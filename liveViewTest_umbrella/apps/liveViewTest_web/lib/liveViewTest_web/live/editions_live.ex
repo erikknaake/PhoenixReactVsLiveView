@@ -42,11 +42,7 @@ defmodule LiveViewTestWeb.EditionsLive do
 
   defp presign_upload(entry, socket) do
     IO.puts("presign")
-#    uuid = Enum.reduce(uploads.avatar.entries, fn(entry, acc) -> entry.uuid end)
     IO.inspect(entry)
-#    IO.inspect(uploads.avatar.entries.uuid)
-#    bucket = "uploads"
-#    key = "#{entry.client_name}"
 
     config = %{
       region: "us-east-1",
