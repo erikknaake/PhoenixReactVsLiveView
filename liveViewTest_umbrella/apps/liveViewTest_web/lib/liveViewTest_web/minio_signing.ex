@@ -62,17 +62,9 @@ defmodule LiveViewTestWeb.MinioSigning do
       |> add_content_length(0, 209715200)
       |> add_bucket(config.bucket)
       |> add_key(config.object)
-    #    IO.puts("Policy: #{IO.inspect(policy)}")
-    #    IO.puts("Policy.policy: #{IO.inspect(policy)}")
     %{"policy" => policy_value} = policy
-    IO.puts("Policy value:")
-    IO.inspect(policy_value)
     json = Jason.encode!(policy_value)
-    IO.puts("json")
-    IO.inspect(json)
     base64_policy = Base.encode64(json)
-    IO.puts("base64_policy:")
-    IO.inspect(base64_policy)
     signature = post_pre_sign_signature_v4(config.region, date_time, config.secret_key, base64_policy)
     %{"formData" => policy_form_data} = policy
     formData = Map.merge(
@@ -152,7 +144,6 @@ defmodule LiveViewTestWeb.MinioSigning do
   defp zeroifySeconds(iso8601) do
     IO.puts("zeroifying")
     Regex.replace(~r/:\d{2}\./, iso8601, ":00.") |> IO.inspect()
-#    "#{rest}:00.#{millis}Z"
   end
 
   @spec add_date(policy, String.t) :: policy
