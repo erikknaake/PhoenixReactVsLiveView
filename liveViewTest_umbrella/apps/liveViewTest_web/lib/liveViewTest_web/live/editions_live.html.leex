@@ -1,4 +1,13 @@
 <h1>Editions</h1>
+<%= for entry <- @uploads.avatar.entries do %>
+<%= entry.client_name %> - <%= entry.progress %>%
+<% end %>
+
+<form phx-submit="save" phx-change="validate">
+    <%= live_file_input @uploads.avatar %>
+    <button type="submit">Upload</button>
+</form>
+
 <%= for edition <- @editions do %>
-    <%= live_component @socket, LiveViewTestWeb.EditionComponent, id: edition.id, edition: edition%>
+    <%= live_component @socket, LiveViewTestWeb.EditionComponent, id: edition.id, edition: edition, uploads: @uploads%>
 <% end %>

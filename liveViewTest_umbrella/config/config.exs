@@ -33,6 +33,12 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# If using S3:
+config :ex_aws,
+       json_codec: Jason,
+       access_key_id: System.get_env("AWS_ACCESS_KEY_ID") || "minio",
+       secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY") || "ucY>Au}Q'Ue]UUF7VY9[/Mz^iR9x6R2rqrRFEV^v>}d:["
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

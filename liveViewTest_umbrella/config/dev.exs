@@ -4,7 +4,7 @@ use Mix.Config
 config :liveViewTest, LiveViewTest.Repo,
   username: "postgres",
   password: "postgres",
-  database: "liveview_test",
+  database: "liveviewtest",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

@@ -12,7 +12,7 @@ defmodule LiveViewTest.TeamsEditionsContext do
         editionResult = EditionsContext.create_if_not_exists(date)
         teamResult = TeamsContext.create_if_not_exists(team)
 
-        %TeamsEditions{teams: teamResult, editions: editionResult}
+        %TeamsEditions{teams: teamResult, editions: editionResult, photo_file_name: ""}
           |> Repo.insert!()
 
         editionResult

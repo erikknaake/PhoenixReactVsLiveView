@@ -39,18 +39,25 @@ defmodule LiveViewTestWeb.MixProject do
     [
       {:phoenix, "~> 1.5.0"},
       {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_live_view, "~> 0.14.8"},
+      {:phoenix_live_view, git: "https://github.com/phoenixframework/phoenix_live_view"},
       {:floki, ">= 0.0.0", only: :test},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.3.6"},
+#      {:phoenix_live_dashboard, "~> 0.3.6"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:liveViewTest, in_umbrella: true},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:corsica, "~> 1.1"}
+      {:corsica, "~> 1.1"},
+      # File uploads
+      {:ex_aws_s3, git: "https://github.com/ex-aws/ex_aws_s3"},
+#      {:ex_aws, git: "https://github.com/ex-aws/ex_aws"},
+      {:hackney, "~> 1.9"},
+      {:sweet_xml, "~> 0.6"},
+      {:httpoison, "~> 1.7"}
+      # end file uploads
     ]
   end
 
