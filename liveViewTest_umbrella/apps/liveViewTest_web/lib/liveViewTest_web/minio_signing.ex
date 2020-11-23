@@ -1,5 +1,8 @@
 defmodule LiveViewTestWeb.MinioSigning do
-  @moduledoc false
+  @moduledoc """
+    Implements the signing logic needed to interact with min.io.
+    This module is based on the [NodeJS SDK](https://github.com/minio/minio-js), but simplified to only work in our use cases
+  """
   @type signed_post_policy :: %{
                                 formData: %{
                                   key: String.t,
@@ -51,6 +54,46 @@ defmodule LiveViewTestWeb.MinioSigning do
     }
   }
 
+  @doc """
+    Gets the post url and form data needed to upload a file directly from the client to the minio cluster
+    This uses some cryptographic algorithms to ensure urls expire and can not be forged without the secret_key
+  """
+  @spec pre_signed_post_policy(signing_config) :: signed_post_policy
+  def pre_signed_post_policy(config, date_time \\ DateTime.utc_now()) do
+    datetime_string = make_long_date(date_time)
+    # Because items are prepended to a list use reverse order in pipeline compared to node.js minio client
+    policy =
+      @default_policy
+      |> add_expiration(date_time, config.expire_seconds)
+      |> add_credential(config.access_key_id, config.region, date_time)
+      |> add_algorithm()
+      |> add_date(datetime_string)
+      |> add_content_length(0, 209715200)
+      |> add_bucket(config.bucket)
+      |> add_key(config.object)
+
+    %{"policy" => policy_value} = policy
+    base64_policy = Base.encode64(Jason.encode!(policy_value))
+
+    signature = post_pre_sign_signature_v4(config.region, date_time, config.secret_key, base64_policy)
+
+    %{"formData" => policy_form_data} = policy
+    formData = Map.merge(
+      policy_form_data,
+      %{
+        "policy" => base64_policy,
+        "x-amz-signature" => signature
+      }
+    )
+    port_str = get_port_string(config.port)
+    url = "#{config.protocol}://#{config.host}#{port_str}/#{config.bucket}"
+    %{postURL: url, formData: formData}
+  end
+
+  @doc """
+    Gets a url needed to download a file directly to the client from the minio cluster
+    This uses some cryptographic algorithms to ensure urls expire and can not be forged without the secret_key
+  """
   @spec pre_signed_get_url(signing_config, DateTime.t) :: String.t
   def pre_signed_get_url(config, date_time \\ DateTime.utc_now()) do
     pre_signed_url("GET", config, date_time)
@@ -115,38 +158,6 @@ defmodule LiveViewTestWeb.MinioSigning do
     URI.encode(
       uri
     )
-  end
-
-  @spec pre_signed_post_policy(signing_config) :: signed_post_policy
-  def pre_signed_post_policy(config, date_time \\ DateTime.utc_now()) do
-    datetime_string = make_long_date(date_time)
-    # Because items are prepended to a list use reverse order in pipeline compared to node.js minio client
-    policy =
-      @default_policy
-      |> add_expiration(date_time, config.expire_seconds)
-      |> add_credential(config.access_key_id, config.region, date_time)
-      |> add_algorithm()
-      |> add_date(datetime_string)
-      |> add_content_length(0, 209715200)
-      |> add_bucket(config.bucket)
-      |> add_key(config.object)
-
-    %{"policy" => policy_value} = policy
-    base64_policy = Base.encode64(Jason.encode!(policy_value))
-
-    signature = post_pre_sign_signature_v4(config.region, date_time, config.secret_key, base64_policy)
-
-    %{"formData" => policy_form_data} = policy
-    formData = Map.merge(
-      policy_form_data,
-      %{
-        "policy" => base64_policy,
-        "x-amz-signature" => signature
-      }
-    )
-    port_str = get_port_string(config.port)
-    url = "#{config.protocol}://#{config.host}#{port_str}/#{config.bucket}"
-    %{postURL: url, formData: formData}
   end
 
   @spec get_port_string(integer()) :: String.t
