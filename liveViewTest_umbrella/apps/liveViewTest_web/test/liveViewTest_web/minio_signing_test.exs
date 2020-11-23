@@ -49,9 +49,6 @@ defmodule LiveViewTestWeb.MinioSigningTest do
     'x-amz-signature': 'db73f860d7dcc3ac96c79b98dcb4989834c1b0a78271694586dd17366af267aa'
   }
   }
-
-
-
   """
   test "Covert config to signed post form" do
     config = %{
@@ -65,7 +62,6 @@ defmodule LiveViewTestWeb.MinioSigningTest do
       port: 9000,
       protocol: "http"
     }
-    # TODO: fix zero seconds in real code
     {:ok, date_time, 0} = DateTime.from_iso8601("2020-11-20T22:39:22.408Z")
     expected = %{
       postURL: "http://localhost:9000/uploads",

@@ -53,6 +53,7 @@ defmodule LiveViewTestWeb.MinioSigning do
   @spec pre_signed_post_policy(signing_config) :: signed_post_policy
   def pre_signed_post_policy(config, date_time \\ DateTime.utc_now()) do
     datetime_string = makeDate(date_time)
+    # Because items are prepended to a list use reverse order in pipeline compared to node.js minio client
     policy =
       @default_policy
       |> add_expiration(date_time, config.expire_seconds)

@@ -10,6 +10,17 @@ const minioClient = new Minio.Client({
 });
 
 app.get('/:object', (req, res) => {
+   minioClient.presignedGetObject("uploads", req.params.object, 24 * 60 * 60, (err, presignedUrl) => {
+       if(err) {
+           console.log("ERROR: ", err);
+       } else {
+           console.log(presignedUrl);
+           res.json(presignedUrl);
+       }
+   })
+});
+
+app.post('/:object', (req, res) => {
 
     const policy = minioClient.newPostPolicy()
     policy.setKey(req.params.object)

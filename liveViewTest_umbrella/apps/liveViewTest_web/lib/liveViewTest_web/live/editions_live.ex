@@ -11,6 +11,7 @@ defmodule LiveViewTestWeb.EditionsLive do
       :ok,
       socket
       |> assign(editions: LiveViewTest.EditionsContext.get_all())
+      |> assign(image: get_image_url())
       |> assign(:uploaded_files, [])
       |> allow_upload(:avatar, accept: :any, max_entries: 3, external: &presign_upload/2)
     }
@@ -18,8 +19,6 @@ defmodule LiveViewTestWeb.EditionsLive do
 
   @impl true
   def handle_info({:registrate_team, date, team_name}, socket) do
-    #    IO.inspect(team_photo)
-    #    {:ok, file_name} = LiveViewTestWeb.TeamPhotoUploader.store(team_photo)
     LiveViewTest.TeamsEditionsContext.put(date, team_name)
     {:noreply, socket}
   end
@@ -39,12 +38,17 @@ defmodule LiveViewTestWeb.EditionsLive do
     {:noreply, assign(socket, editions: updated_editions)}
   end
 
+  defp get_image_url do
+    IO.puts("get image url")
+    response = HTTPoison.get!("http://localhost:3000/dodgebow2.JPG") |> IO.inspect()
+    Jason.decode!(response.body) |> IO.inspect()
+  end
 
   defp presign_upload(entry, socket) do
     IO.puts("presign")
     IO.inspect(entry)
 
-    key = entry.client_name
+    key = entry.uuid
     config = %{
       region: "us-east-1",
       access_key_id: "minio",

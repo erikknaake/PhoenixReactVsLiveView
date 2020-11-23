@@ -11,3 +11,4 @@
 <%= for edition <- @editions do %>
     <%= live_component @socket, LiveViewTestWeb.EditionComponent, id: edition.id, edition: edition, uploads: @uploads%>
 <% end %>
+<img src="<%= @image %>"/>
