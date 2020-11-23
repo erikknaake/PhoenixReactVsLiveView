@@ -1,6 +1,7 @@
 defmodule LiveViewTestWeb.EditionsLive do
   use LiveViewTestWeb, :live_view
-  alias ExAws.S3
+  alias LiveViewTestWeb.{MinioSigning}
+
   @impl true
   def mount(_params, _session, socket) do
     IO.puts("Mount")
@@ -40,8 +41,18 @@ defmodule LiveViewTestWeb.EditionsLive do
 
   defp get_image_url do
     IO.puts("get image url")
-    response = HTTPoison.get!("http://localhost:3000/dodgebow2.JPG") |> IO.inspect()
-    Jason.decode!(response.body) |> IO.inspect()
+    config = %{
+      region: "us-east-1",
+      access_key_id: "minio",
+      secret_key: "minio123",
+      object: "dodgebow2.JPG",
+      bucket: "uploads",
+      expire_seconds: 24 * 60,
+      host: "localhost",
+      port: 9000,
+      protocol: "http"
+    }
+    MinioSigning.pre_signed_get_url(config) |> IO.inspect()
   end
 
   defp presign_upload(entry, socket) do
@@ -55,13 +66,13 @@ defmodule LiveViewTestWeb.EditionsLive do
       secret_key: "minio123",
       object: key,
       bucket: "uploads",
-      expire_seconds: 24 * 60 * 60 * 10,
+      expire_seconds: 24 * 60,
       host: "localhost",
       port: 9000,
       protocol: "http"
     }
 
-    %{postURL: post_url, formData: form_data} = LiveViewTestWeb.MinioSigning.pre_signed_post_policy(config)
+    %{postURL: post_url, formData: form_data} = MinioSigning.pre_signed_post_policy(config)
 
     meta = %{uploader: "S3", key: key, url: post_url, fields: form_data} |> IO.inspect()
     {:ok, meta, socket}
